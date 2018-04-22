@@ -1,0 +1,72 @@
+# <center>WSGI</center>
+----
+&nbsp; 全称为Web Server Gateway Interface，即 Web服务器网关接口。是一种标准接口规范，规定了 web 服务器 和 Python web 应用/框架 之间如何传递数据，以便 web 应用 可以与多种 web 服务器配合工作。
+### Web 服务器网关接口
+我们知道Python有着许多的 Web 框架，而同时又有着许多的 Web 服务器（Apache, Nginx, Gunicorn等），框架和Web服务器之间需要进行通信，如果在设计时它们之间不可以相互匹配的，那么选择了一个框架就会限制对 Web 服务器的选择，这显然是不合理的。
+
+那么，怎样确保可以在不修改Web服务器代码或网络框架代码的前提下，使用自己选择的服务器，并且匹配多个不同的网络框架呢？答案是接口，设计一套双方都遵守的接口就可以了。对python来说，就是WSGI（Web Server Gateway Interface，Web服务器网关接口）。其他编程语言也拥有类似的接口：例如Java的Servlet API和Ruby的Rack。
+
+Python WSGI的出现，让开发者可以将 Web 框架与 Web 服务器的选择分隔开来，不再相互限制。现在，你可以真正地将不同的 Web 服务器与Web框架进行混合搭配，选择满足自己需求的组合。例如，可以使用 Gunicorn 或Nginx/uWSGI来运行Django、Flask或web.py应用。
+
+![Alt text](/home/workspace/wsgi.png)
+
+##HTTP 客户端 --- web 服务器 --- WSGI --- Flask
+
+###作用：
+
+* web 服务器知道如何调用 web 应用，传递用户的请求给应用
+*  让应用知道用户的请求内容，以及如何返回消息给 web 服务器
+
+### WSGI的两种角色
+
+server/gateway, 通常是 web 服务器，接受客户的请求，调用 application，将 application 处理的结果封装成 HTTP 响应返回给客户。
+
+application/framework, 是 Python 应用
+
+application 是一个需要两个参数的可调用对象，可以是一个函数、方法，或一个有__call__方法的实例。
+
+### 角色的实现
+
+application 端 : 由 Python 框架实现，会提供接口让开发者能够获取到请求内容，并帮助进行响应返回
+
+server 端 : 一般 web 服务器 不内置对 WSGI 的支持，需要通过扩展来完成，比如 Apache 的 mod_wsgi 扩展模块、Nginx 的 uWSGI。扩展可以实现 WSGI 的服务端、进程管理、对 application 的调用
+
+### web应用的流程
+1. 浏览器发送一个HTTP请求；
+
+2. 服务器收到请求，生成一个HTML文档；
+
+3. 服务器把HTML文档作为HTTP响应的Body发送给浏览器；
+
+4. 浏览器收到HTTP响应，从HTTP Body取出HTML文档并显示
+
+最简单的Web应用就是先把HTML用文件保存好，用一个现成的HTTP服务器软件，接收用户请求，从文件中读取HTML，返回。Apache、Nginx、Lighttpd等这些常见的静态服务器就是干这件事情的。
+
+如果要动态生成HTML，就需要把上述步骤自己来实现。不过，接受HTTP请求、解析HTTP请求、发送HTTP响应都是苦力活，如果我们自己来写这些底层代码，还没开始写动态HTML呢，就得花个把月去读HTTP规范。
+
+正确的做法是底层代码由专门的服务器软件实现，我们用Python专注于生成HTML文档。因为我们不希望接触到TCP连接、HTTP原始请求和响应格式，所以，需要一个统一的接口，让我们专心用Python编写Web业务。
+
+这个接口就是WSGI：Web Server Gateway Interface。
+# 例子
+```
+def hello_world_app(environ, start_response):
+status = '200 OK'
+headers = [('Content-type', 'text/plain')]
+start_response(status, headers)
+return ["hello world"]
+
+
+def main():
+    from wsgiref.simple_server import make_server
+    httpd = make_server('', 8000, hello_world_app)
+    print "Serving on port 8000"
+   
+    httpd.serve_forever()
+
+if __name__ == '__main__':
+    main()
+```
+
+
+
+
