@@ -36,10 +36,60 @@ Python WSGI的出现，让开发者可以将 Web 框架与 Web 服务器的选�
 
 * application 端 : 由 Python 框架实现，会提供接口让开发者能够获取到请求内容，并帮助进行响应返回
 
-* server 端 : 一般 web 服务器 不内置对 WSGI 的支持，需要通过扩展来完成，比如 Apache 的 mod_wsgi 扩展模块、Nginx 的 uWSGI。扩展可以实现 WSGI 的服务端、进程管理、对 application 的调用
+* server 端 : 一般 web 服务器 不内置对 WSGI 的支持，需要通过扩展来完成，比如 Apache 的 mod_wsgi 扩展模块、Nginx 的 uWSGI。扩展可以实现 WSGI 的服务端、进程管理、对 application 的调用  
 
+### 为了支持WSGI，服务器需要做什么？
+一个WSGI服务器需要实现两个函数:  
+1. 解析从服务器传过来的http请求，为应用程序提供environ字典
+```
+def get_environ(self):
+      env = {}
+      env['wsgi.version']      = (1, 0)
+      env['wsgi.url_scheme']   = 'http'
+      env['wsgi.input']        = StringIO.StringIO(self.request_data)
+      env['wsgi.errors']       = sys.stderr
+      env['wsgi.multithread']  = False
+      env['wsgi.multiprocess'] = False
+      env['wsgi.run_once']     = False
+      env['REQUEST_METHOD']    = self.request_method    # GET
+      env['PATH_INFO']         = self.path              # /hello
+      env['SERVER_NAME']       = self.server_name       # localhost
+      env['SERVER_PORT']       = str(self.server_port)  # 8888
+      return env
+```  
+2. 实现start response函数  
+```
+def start_response(self, status, response_headers, exc_info=None):
+      # Add necessary server headers
+      server_headers = [
+          ('Date', 'Tue, 31 Mar 2015 12:54:48 GMT'),
+          ('Server', 'WSGIServer 0.2'),
+      ]
+      self.headers_set = [status, response_headers + server_headers]
+      # To adhere to WSGI specification the start_response must return
+      # a 'write' callable. We simplicity's sake we'll ignore that detail
+      # for now.
+```
+### WSGI服务器调用Python应用程序
+1.从客户端获取到请求  
+2.通过get_env获得envir变量  
+3.调用应用程序，传入env和start_response函数,并获得响应  
+4.将响应返回给客户端  
+```
+def handle_one_request(self):
+      self.request_data = request_data = self.client_connection.recv(1024)
+      print(''.join(
+          '< {line}\n'.format(line=line)
+          for line in request_data.splitlines()
+      ))
+      self.parse_request(request_data)
+      env = self.get_environ() #获取environ
+      result = self.application(env, self.start_response)#调用应用程序
+      self.finish_response(result)
+```
 
-# 例子
+### Python 应用程序需要做什么？
+主要工作就是根据输入的environ字典信息生成相应的http报文返回给服务器。
 ```
 def hello_world_app(environ, start_response):
 status = '200 OK'
@@ -58,6 +108,7 @@ def main():
 if __name__ == '__main__':
     main()
 ```
+
 
 
 
