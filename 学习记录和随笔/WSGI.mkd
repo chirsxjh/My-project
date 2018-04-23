@@ -41,8 +41,10 @@ Python WSGI的出现，让开发者可以将 Web 框架与 Web 服务器的选�
 * ``server ``端 : 一般 web 服务器 不内置对 WSGI 的支持，需要通过扩展来完成，比如 Apache 的`` mod_wsgi ``扩展模块、``Nginx ``的`` uWSGI``。扩展可以实现 WSGI 的服务端、进程管理、对 application 的调用  
 
 ### 为了支持WSGI，服务器需要做什么？
+
 一个``WSGI``服务器需要实现两个函数:  
 1. 解析从服务器传过来的http请求，为应用程序提供``environ``字典
+
 ```
 def get_environ(self):
       env = {}
@@ -72,6 +74,8 @@ def start_response(self, status, response_headers, exc_info=None):
       # a 'write' callable. We simplicity's sake we'll ignore that detail
       # for now.
 ```
+数据流程图  
+![png](file:///tmp/VMwareDnD/HxD1iB/v2-8e57dcd56fe8ae513f23a7855d5f62e6_hd.jpg)
 ### WSGI服务器调用Python应用程序
 1.从客户端获取到请求  
 2.通过``get_env``获得``envir``变量  
@@ -94,10 +98,10 @@ def handle_one_request(self):
 主要工作就是根据输入的``environ``字典信息生成相应的http报文返回给服务器。
 ```
 def hello_world_app(environ, start_response):
-status = '200 OK'
-headers = [('Content-type', 'text/plain')]
-start_response(status, headers)
-return ["hello world"]
+    status = '200 OK'
+    headers = [('Content-type', 'text/plain')]
+    start_response(status, headers)
+    return ["hello world"]
 
 
 def main():
