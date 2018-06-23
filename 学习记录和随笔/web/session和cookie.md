@@ -3,7 +3,7 @@
 ## 关于cookie
 **Cookie是一种客户端的技术，而Session则是服务端的技术。登陆的过程其实就是一个会话开始的时候，服务器给客户端一个ID，如上面看到的Set-Cookie，这其实就代表会话的开始，而当浏览器关闭后，一次会话也就结束了**  
 ![png](https://pic2.zhimg.com/80/v2-1a967139b1658a379502549aa0e35ceb_hd.jpg)  
-在一次会话中，用户的状态保存在服务器中，而客户端是保存一个会话ID，所以当我们在没登陆的时候请求 http://nladuo.cn/crawler_lesson2/private.php页面时，服务器会在缓存数据库里的PHPSESSID这张表查找id为9m8vgq9699fun79t3ks6ljrdh7的字段，判断用户是否登陆了，然后根据查询的结果来返回不同的页面。在登录其他类如知乎，豆瓣等都是一样的道理。  
+在一次会话中，用户的状态保存在服务器中，而客户端是保存一个会话ID，所以当我们在没登陆的时候请求页面时，服务器会在缓存数据库里的PHPSESSID这张表查找id为9m8vgq9699fun79t3ks6ljrdh7的字段，判断用户是否登陆了，然后根据查询的结果来返回不同的页面。在登录其他类如知乎，豆瓣等都是一样的道理。  
 ![png](https://pic3.zhimg.com/80/v2-2516b9cb4d6bd62f5b4bb51c1283608e_hd.jpg)  
 比如，我们在没有登陆前，缓存服务器中PHPSESSID中9m8vgq9699fun79t3ks6ljrdh7的is_login字段是NULL，所以服务器查询到is_login是空的，所以不给用户看隐私页面。当我们登陆的时候，如果用户名密码正确，服务器就会给缓存服务器上的9m8vgq9699fun79t3ks6ljrdh7字段的is_login设置为True，当用户下次请求隐私页面的时候，就可以看到正确的返回结果了  
 ![png](https://pic1.zhimg.com/80/v2-b9fe018fadc071f3dcc065ae4c759c26_hd.jpg)  
