@@ -1,0 +1,2 @@
+model_checkpoint_path: "/home/xiang/mygit/\345\255\246\344\271\240\350\256\260\345\275\225\345\222\214\351\232\217\347\254\224/network/cnn.ckpt"
+all_model_checkpoint_paths: "/home/xiang/mygit/\345\255\246\344\271\240\350\256\260\345\275\225\345\222\214\351\232\217\347\254\224/network/cnn.ckpt"
