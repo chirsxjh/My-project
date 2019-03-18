@@ -2,6 +2,7 @@
 # coding:utf-8
 def quickSort(alist):
     quickSortHelper(alist,0,len(alist)-1)
+    
 def quickSortHelper(alist,first,last):
     #基本结束条件
     if first<last:
