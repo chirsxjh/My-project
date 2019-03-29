@@ -369,7 +369,8 @@ if __name__ == '__main__':
     print("After sorting...")
     print(a)
 ```
-
+**流程图**
+![](https://wx4.sinaimg.cn/large/0071Dyx4ly1g1jvvlh7qkj30gm13djt5.jpg)
 
 #### 桶排序
 桶排序是计数排序的升级版。它利用了函数的映射关系，高效与否的关键就在于这个映射函数的确定。桶排序 (Bucket sort)的工作的原理：假设输入数据服从均匀分布，将数据分到有限数量的桶里，每个桶再分别排序（有可能再使用别的排序算法或是以递归方式继续使用桶排序进行排）。
@@ -413,5 +414,7 @@ def main():
 if __name__ == '__main__':
     main()
 ```
+**流程图**
+![](https://wx4.sinaimg.cn/large/0071Dyx4ly1g1jvvltvk8j30gg10caba.jpg)
 
 
