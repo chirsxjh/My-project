@@ -369,7 +369,7 @@ if __name__ == '__main__':
     print("After sorting...")
     print(a)
 ```
-**流程图**
+**流程图**  
 ![](https://wx4.sinaimg.cn/large/0071Dyx4ly1g1jvvlh7qkj30gm13djt5.jpg)
 
 #### 桶排序
@@ -414,7 +414,7 @@ def main():
 if __name__ == '__main__':
     main()
 ```
-**流程图**
+**流程图**  
 ![](https://wx4.sinaimg.cn/large/0071Dyx4ly1g1jvvltvk8j30gg10caba.jpg)
 
 
