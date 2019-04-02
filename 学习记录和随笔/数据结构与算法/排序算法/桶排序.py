@@ -1,13 +1,16 @@
 #!/usr/bin/env python
 # coding:utf-8
+
 def bucket_sort(array, n):
     # 1.创建n个空桶
     new_list = [[] for _ in range(n)]
-
-    # 2.把arr[i] 插入到bucket[n*array[i]]
+    #print (new_list)
+ # 2.把arr[i] 插入到bucket[n*array[i]]
     for data in array:
         index = int(data * n)
+        print (index)
         new_list[index].append(data)
+    #print (new_list)
 
     # 3.桶内排序
     for i in range(n):
@@ -20,7 +23,7 @@ def bucket_sort(array, n):
             array[index] = new_list[i][j]
             index += 1
     return array
-
+    
 
 def main():
     array = [0.897, 0.565, 0.656, 0.1234, 0.665, 0.3434]

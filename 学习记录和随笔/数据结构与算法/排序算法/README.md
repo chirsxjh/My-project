@@ -88,7 +88,7 @@ print(arr)
 
 ```
 **流程图**
-![](https://wx4.sinaimg.cn/large/0071Dyx4ly1g171w6bcq3j30e70t6t99.jpg)
+![](https://wx3.sinaimg.cn/large/0071Dyx4ly1g1oeeazgnkj30e70wjaap.jpg)
 
 #### 插入排序
 插入排序（Insertion-Sort）的算法描述是一种简单直观的排序算法。它的工作原理是通过构建有序序列，对于未排序数据，在已排序序列中从后向前扫描，找到相应位置并插入。
@@ -106,29 +106,25 @@ print(arr)
 ![](https://images2017.cnblogs.com/blog/849589/201710/849589-20171015225645277-1151100000.gif)
 **代码**
 ```
-#!/usr/bin/env python
-# coding:utf-8
-def select_sort(li):
-    n = len(li) #li列表中有n个数，下标从0到n-1
-    # i从0到n-1 ，我们每次拿下标为i的数跟后面数比较 标记最小的数
-    for i in range( n ):
-        temp = i #用temp做临时标记，没遇见比下标temp更小的数，就用temp标记更小的数的下表
-        # 从temp开始向后找到最后 找最小的数
-        for j in range( temp , n ):
-            #如果我们遇到比temp标记的数更小的，tamp就标记更小的数的下标
-            if li[temp] > li[j] :
-                temp = j
-        #这次for循环之后 temp一定标记了i之后的最小的数的下标，我们把最小的数和i位置进行互换
-        li[i] , li[temp] = li[temp] , li[i]
+def insertion_sort(list):
+    n = len(list)
+    for i in range(1, n):
+        key = list[i]
+        j = i - 1
+        while j >= 0 and list[j] > key:
+            list[j+1] = list[j]
+            j -= 1
+        list[j+1] = key
+    return list
 
-if __name__ == '__main__':
-    li = [5,4,3,2,1]
-    select_sort(li)
-    print(li)
+list1 = [5,6,2,7,9,0,1,3,8,4]
+print("原列表：%s" %list1)
+insertion_sort(list1)
+print("排序后列表：%s" %list1)
 
 ```
 **流程图**  
-![](https://wx1.sinaimg.cn/large/0071Dyx4ly1g1723tpu7oj30oc0srt9a.jpg)
+![](https://wx4.sinaimg.cn/large/0071Dyx4ly1g1oeeat9j5j30q00wpq3w.jpg)
 
 #### 希尔排序
 1959年Shell发明，第一个突破O(n2)的排序算法，是简单插入排序的改进版。它与插入排序的不同之处在于，它会优先比较距离较远的元素。希尔排序又叫缩小增量排序。  
@@ -174,7 +170,7 @@ if __name__ == '__main__':
     print(li)
 ```
 **流程图**  
-![](https://wx3.sinaimg.cn/large/0071Dyx4ly1g1lsv4fvtij30n90tngn2.jpg)
+![](https://wx1.sinaimg.cn/large/0071Dyx4ly1g1oeec5lp3j30n90tnmym.jpg)
 
 #### 归并排序
 归并排序是建立在归并操作上的一种有效的排序算法。该算法是采用分治法（Divide and Conquer）的一个非常典型的应用。将已有序的子序列合并，得到完全有序的序列；即先使每个子序列有序，再使子序列段间有序。若将两个有序表合并成一个有序表，称为2-路归并。   
@@ -184,7 +180,7 @@ if __name__ == '__main__':
 * 将两个排序好的子序列合并成一个最终的排序序列。  
 **算法分析**    
 归并排序是一种稳定的排序方法。和选择排序一样，归并排序的性能不受输入数据的影响，但表现比选择排序好的多，因为始终都是O(nlogn）的时间复杂度。代价是需要额外的内存空间。
-![](https://images2017.cnblogs.com/blog/849589/201710/849589-20171015230557043-37375010.gif)
+![](https://wx1.sinaimg.cn/large/0071Dyx4ly1g1oeeboc8vj30d50qtmxj.jpg)
 **代码**
 ```
 #!/usr/bin/env python
@@ -280,7 +276,7 @@ quickSort(alist)
 print(alist)
 ```
 **流程图**  
-![](https://wx1.sinaimg.cn/large/0071Dyx4ly1g1lw9r8d55j30nw17mq4y.jpg)
+![](https://wx3.sinaimg.cn/large/0071Dyx4ly1g1oeeal5b2j30nw19xwgv.jpg)
 
 #### 堆排序
 堆排序（Heapsort）是指利用堆这种数据结构所设计的一种排序算法。堆积是一个近似完全二叉树的结构，并同时满足堆积的性质：即子结点的键值或索引总是小于（或者大于）它的父节点。
@@ -378,7 +374,7 @@ if __name__ == '__main__':
     print(a)
 ```
 **流程图**  
-![](https://wx4.sinaimg.cn/large/0071Dyx4ly1g1jvvlh7qkj30gm13djt5.jpg)
+![](https://wx4.sinaimg.cn/large/0071Dyx4ly1g1oeebv2zxj30gm13d40a.jpg)
 
 #### 桶排序
 桶排序是计数排序的升级版。它利用了函数的映射关系，高效与否的关键就在于这个映射函数的确定。桶排序 (Bucket sort)的工作的原理：假设输入数据服从均匀分布，将数据分到有限数量的桶里，每个桶再分别排序（有可能再使用别的排序算法或是以递归方式继续使用桶排序进行排）。
@@ -423,7 +419,7 @@ if __name__ == '__main__':
     main()
 ```
 **流程图**  
-![](https://wx1.sinaimg.cn/large/0071Dyx4ly1g1lwj5vfegj30gy10c0tz.jpg)
+![](https://wx2.sinaimg.cn/large/0071Dyx4ly1g1oeeaelrwj30gy10ct9y.jpg)
 <<<<<<< HEAD
 =======
 
