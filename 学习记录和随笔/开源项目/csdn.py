@@ -14,12 +14,12 @@ headers = {
 }
 
 
-
+#原始的url
 def connecturl(kword):
     url = 'https://so.csdn.net/so/search/s.do?q=' + kword
     return url
 
-
+#得到原始数据
 def get_information(inf):
     search_results = []
     url = connecturl(inf)
@@ -126,7 +126,7 @@ def words_number(inf):
         j = j+1
     return w_number  
 
-#对所获取的关键字进行加权
+#对所获取的信息进行加权
 def weighting(inf):
     wait_sort = {}
     x = titie_len(inf)
@@ -140,8 +140,6 @@ def weighting(inf):
         weights = [0.4, 0.3, 0.2, 0.1]
         wait_sort[j] = int(np.average(elements, weights=weights))
     return wait_sort
-
-
 
 #使用归并排序进行排序
 def merge(a, b):
@@ -188,9 +186,34 @@ def out_put(inf):
             if a[j] == wait_sort[i]:
                 out.append(i)
     for i in range(len(out)):
-        put = get_information(inf)[out[i]]['title']
-        print put 
-        
+        put = i, get_information(inf)[out[i]]['title']
+        print put
+        print ''
+    print '你想查看的答案是'
+    youinput = int(raw_input())
+    re = get_errorins(inf)[out[youinput]]
+    print re
+    
+
+def get_errorins(inf):
+    res = get_information(inf)
+    link = {}
+    errins_num = {}
+    j = 1
+    for i in res[1:]:
+        link[j] = i['url']
+        #pdb.set_trace()
+        html = requests.get(link[j], headers=headers)
+        html.encoding = 'utf-8'
+        s = html.text
+        soup = BeautifulSoup(s, 'html.parser')
+        for result in soup.find_all('div', id= 'content_views'):
+            for k in result.find_all('p'):
+                insf = k.text
+            errins_num[j] = insf
+        j = j+1
+    return  errins_num
+
 
 
 
@@ -206,11 +229,11 @@ def out_put(inf):
 
 
 if __name__ == "__main__":
-    
+    '''
     inf = raw_input('请输入关键词：')
-    number = out_put(inf)
-    #print number
-'''
+    number = get_errorins(inf)
+    print number[1]
+
     res = get_information(inf)
     shunxu = {}
     j = 1
@@ -220,8 +243,7 @@ if __name__ == "__main__":
         print shunxu[j]
         #print len(i['title'])
         j = j+1
-       
-    
+'''
     cmds = ('python {}'.format(sys.argv[1]))
     result=  commands.getstatusoutput(cmds)
     #res = os.system(('python {}'.format(sys.argv[1])))
@@ -230,12 +252,12 @@ if __name__ == "__main__":
 
     #res = get_information(result)
     if result[0] == 256:
-        res = get_information(result[1][40:])
-        for i in res:
-            print i['title'],i['url']
+        res = out_put(result[1][40:])
+        #for i in res:
+            #print i['title'],i['url']
     else:
         print (result[1])
-   '''
+
 
 
 
