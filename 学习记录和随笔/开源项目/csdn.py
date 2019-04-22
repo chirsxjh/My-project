@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 #_*_ coding:utf-8 _*_
 import requests
+import multiprocessing
 from bs4 import BeautifulSoup
 from lxml import etree
 import pdb
@@ -128,6 +129,8 @@ def words_number(inf):
 
 #对所获取的信息进行加权
 def weighting(inf):
+    numList = []
+    
     wait_sort = {}
     x = titie_len(inf)
     y = read_number(inf)
@@ -181,20 +184,24 @@ def out_put(inf):
         a.append(wait_sort[i])
     a = merge_sort(a)
     #print a
+    #将排序后的权值找到其对应的字典key，从小到大按权值
     for j in range(0, len(a)):
         for i in range(1, len(wait_sort)):
             if a[j] == wait_sort[i]:
                 out.append(i)
-    for i in range(len(out)):
-        put = i, get_information(inf)[out[i]]['title']
-        print put
-        print ''
-    print '你想查看的答案是'
-    youinput = int(raw_input())
-    re = get_errorins(inf)[out[youinput]]
-    print re
-    
 
+    out.reverse() #将排序好的权重按从大到小输出
+
+    for i, v in enumerate(out):
+        print i, get_information(inf)[v]['title']
+        print ''
+    print "\033[7;37;40m\t你想查看的答案是\033[0m"
+    youinput = int(raw_input())
+    #pdb.set_trace()
+    print  get_errorins(inf)[out[youinput]]
+    
+    
+#得到检索信息里面的内容
 def get_errorins(inf):
     res = get_information(inf)
     link = {}
@@ -252,9 +259,16 @@ if __name__ == "__main__":
 
     #res = get_information(result)
     if result[0] == 256:
-        res = out_put(result[1][40:])
-        #for i in res:
-            #print i['title'],i['url']
+        print result[1]
+        #"\033[0;37;40m\tHello World\033[0m"
+        shuru = raw_input("\033[0;37;41m\t是否开启面向csdn搜索?(Y/N)\033[0m")
+        if shuru == 'Y':
+            print ''
+            print "\033[7;37;40m\t正在全力搜索，请耐心等待\033[0m"
+            res = out_put(result[1][40:])
+        else:
+            pass
+        
     else:
         print (result[1])
 

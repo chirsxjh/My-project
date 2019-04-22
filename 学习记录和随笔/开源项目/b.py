@@ -1,4 +1,37 @@
-#_*_ coding:utf-8 _*_
+#_*_ coding:utf-8 _*_  
+#print ('我就试一下你会歪abcd是abcd吗')
+m = 6
+n = 6
+dp = [[int(i == 0) or int(j == 0) for i in range(m)] for j in range(n)]
+print dp
+
+
+
+'''
+import multiprocessing
+
+def addnum(a,b):
+  res = a+b
+  return res 
+
+def mulnum(a,b):
+    res = a*b
+    return res
+
+
+
+if __name__ == '__main__' :
+    numList = []
+    p = multiprocessing.Process(target=addnum, args=(1,2))
+    #print addnum
+    numList.append(p)
+    p.start()
+    p.join()
+    print numList
+
+  #print ('hello')
+
+
 import numpy as np
 import pdb
 i = 0
@@ -6,7 +39,7 @@ i = 0
 dict= {'name': 'xiaoming', 'age':'3', 'grade':'5' }
 dict('name')
 
-'''
+
 
 def merge(a, b):
     c = []
@@ -75,3 +108,5 @@ for j in range(1, i+1):
 
   #[1766, 3326, 1033, 1023, 1769, 1019, 41, 135, 3, 5, 8]
   '''
+ 
+
