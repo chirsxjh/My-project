@@ -9,6 +9,14 @@ import os
 import commands
 import sys
 import numpy as np
+'''
+The project obtains error reporting information when running program in terminal,
+uses crawler to retrieve information of domestic mainstream forum, 
+and then gets an evaluation model by word frequency, document length, 
+number of links into web page, length of title, and so on. 
+Then sort by comparing the advantages and disadvantages of the sorting algorithm, 
+and then output the sorted error information from the terminal according to the userundefineds choice.
+'''
 
 headers = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36',
@@ -179,12 +187,12 @@ def out_put(inf):
     wait_sort = weighting(inf)
     out = []
     a = []
-    #result = []
+ 
     for i in range(1, len(wait_sort)+1):
         a.append(wait_sort[i])
     a = merge_sort(a)
-    #print a
-    #将排序后的权值找到其对应的字典key，从小到大按权值
+    
+    '''将排序后的权值找到其对应的字典key，从小到大按权值'''
     for j in range(0, len(a)):
         for i in range(1, len(wait_sort)):
             if a[j] == wait_sort[i]:
@@ -221,43 +229,10 @@ def get_errorins(inf):
         j = j+1
     return  errins_num
 
-
-
-
-    
-
-
-           
-
-
-
-    
-
-
-
 if __name__ == "__main__":
-    '''
-    inf = raw_input('请输入关键词：')
-    number = get_errorins(inf)
-    print number[1]
-
-    res = get_information(inf)
-    shunxu = {}
-    j = 1
-    for i in res:
-        shunxu[j] = i['title']
-        #print j,i['title'],i['url']
-        print shunxu[j]
-        #print len(i['title'])
-        j = j+1
-'''
-    cmds = ('python {}'.format(sys.argv[1]))
+    cmds = ('python {}'.format(sys.argv[1])) #获取参数并用python运行
     result=  commands.getstatusoutput(cmds)
-    #res = os.system(('python {}'.format(sys.argv[1])))
-    #inf = input('请输入关键词：')
-    
-
-    #res = get_information(result)
+   
     if result[0] == 256:
         print result[1]
         #"\033[0;37;40m\tHello World\033[0m"

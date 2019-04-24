@@ -2,8 +2,8 @@
 #_*_ coding:utf-8 _*_
 intervals = [[1,3],[2,6],[8,10],[15,18]]
 intervals.sort(key = lambda x:x[0])
-print intervals
-res = [intervals[0]]
+print (intervals)
+res = [intervals[4]]
 print res[-1]
 '''
 adic = {1:98,2:12,3:78}

@@ -1,11 +1,6 @@
 #_*_ coding:utf-8 _*_  
-#print ('我就试一下你会歪abcd是abcd吗')
-m = 6
-n = 6
-dp = [[int(i == 0) or int(j == 0) for i in range(m)] for j in range(n)]
-print dp
 
-
+  print 'abc' 
 
 '''
 import multiprocessing
