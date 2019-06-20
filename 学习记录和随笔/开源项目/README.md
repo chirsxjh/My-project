@@ -1,10 +1,11 @@
-### 自动错误检索
-该项目通过获取在终端运行程序时的报错信息，利用爬虫爬取国内主流论坛的检索信息，再通过词频率、文档长度、网页入链数
-量、标题长度进行加权，得到一个评估模型，再通过比较排序算法的优劣性进行排序，最后再根据用户的选择从终端输出排序好的
-错误检索信息  
-运行方式： python csdn.py +(你想运行的代码)  
-例如： python csdn.py b.py
+## 自动错误检索
+This project obtains the error information when the terminal runs the program, uses the crawler to crawl the search information of the domestic mainstream forums, and then uses the frequency of words, the length of documents and the number of pages in the chain.
+After weighting the quantity and the length of the title, an evaluation model is obtained, and then sorted by comparing the advantages and disadvantages of the sorting algorithm, and finally sorted from the terminal output according to the user's choice.
+Error Retrieval Information
+### How to run it
+```python csdn.py``` +(your error code)  
+for example： ```python csdn.py b.py```
 
-流程图：  
+Flow chart：  
 ![](https://wx4.sinaimg.cn/large/0071Dyx4ly1g2blqq4awyj30qm1153zj.jpg)
 
