@@ -11,3 +11,6 @@ If you are interested and want to know me, contact me below.
 ## My contact information
 QQ:1131360171
 Email:shum0804@hotmail.com
+
+## Updated at 2019.8.26
+I am now a cloud computing backend development engineer.Immersed in work, so it will be updated very slowly
